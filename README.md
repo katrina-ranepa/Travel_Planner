@@ -73,7 +73,6 @@
 | **Python** | Основной язык | 3.10+ |
 | **pandas** | Анализ данных | 2.0+ |
 | **numpy** | Численные вычисления | 1.24+ |
-| **SQLAlchemy** | Работа с БД | 2.0+ |
 | **python-telegram-bot** | Telegram API | 20.0+ |
 | **matplotlib** | Визуализация | 3.7+ |
 | **requests** | HTTP запросы | 2.31+ |
@@ -81,10 +80,9 @@
 ### 🌐 Источники данных
 | Источник | Тип данных | Доступ |
 |----------|------------|---------|
-| **Open-Meteo** | Прогноз погоды | Free API |
-| **WorldWeatherOnline** | История погоды | Free Tier |
-| **Google Trends** | Популярность | Dataset |
-| **Туристические порталы** | События, цены | Парсинг |
+| **Open-Meteo** | Прогноз погоды | Free API | https://open-meteo.com/) |
+| **Google Trends** | Популярность | Dataset | https://trends.google.com/trends/ |
+ 
 
 </div>
 
@@ -122,8 +120,6 @@ python src/main.py
 ```
 
 ### ⚙️ Конфигурация
-
-Создайте файл `venv` в корне проекта:
 
 ```venv
 # 🔐 Telegram Bot
@@ -169,15 +165,12 @@ DATABASE_URL=sqlite:///data/tripoptimizer.db
 class DataCollector:
     def get_weather_data(self, city, period):
         """Сбор погодных данных"""
-        # Историческая погода + прогноз
+         (прогноз)
         
     def get_popularity_data(self, city):
         """Анализ популярности"""
         # Google Trends + туристическая статистика
-        
-    def get_events_data(self, city, month):
-        """События и фестивали"""
-        # Календарь мероприятий
+
 ```
 
 ### 🧮 Оценка оптимальности
@@ -187,10 +180,10 @@ class DataCollector:
 Оптимальность = (W1 × Температурный_комфорт) 
               + (W2 × Отсутствие_осадков) 
               + (W3 × Низкая_загруженность) 
-              + (W4 × Наличие_событий)
+            
 
 Где:
-• W1, W2, W3, W4 — веса пользовательских предпочтений
+• W1, W2, W3 — веса пользовательских предпочтений
 • Все факторы нормированы от 0 до 1
 ```
 
@@ -217,8 +210,8 @@ class DataCollector:
 
 | Роль | Участник | Контакты |
 |------|----------|----------|
-| **Project woman** | Берлизова Екатерина | [[@ivan_ivanov](https://t.me/ivan_ivanov)](https://github.com/katrina-ranepa) |
-| **Project man** | Кириллов Егор | hghjj |
+| **Project woman** | Берлизова Екатерина | (https://github.com/katrina-ranepa) |
+| **Project man** | Кириллов Егор | https://avatars.githubusercontent.com/u/77578877?v=4 |
 | **Project man** | Михайлов Александр | gghh |
 
 
@@ -231,14 +224,8 @@ class DataCollector:
 | Канал | Ссылка | Описание |
 |-------|--------|----------|
 | **Бот в Telegram** | [@TripOptimizerBot](https://t.me/TripOptimizerBot) | Основной бот |
-| **Чат поддержки** | [@TripOptimizerChat](https://t.me/TripOptimizerChat) | Вопросы и помощь |
-| **GitHub Issues** | [Issues](https://github.com/yourusername/tripoptimizer/issues) | Баги и предложения |
 | **Email** | support@tripoptimizer.ru | Деловая переписка |
 
-### 📊 Статистика проекта
-![GitHub Stars](https://img.shields.io/github/stars/yourusername/tripoptimizer?style=for-the-badge)
-![GitHub Forks](https://img.shields.io/github/forks/yourusername/tripoptimizer?style=for-the-badge)
-![GitHub Issues](https://img.shields.io/github/issues/yourusername/tripoptimizer?style=for-the-badge)
 
 </div>
 
