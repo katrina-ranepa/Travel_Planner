@@ -3,10 +3,9 @@
 <div align="center">
 
 ![Python Version](https://img.shields.io/badge/python-3.10%2B-blue)
-![License](https://img.shields.io/badge/license-MIT-green)
 ![Telegram Bot](https://img.shields.io/badge/Telegram-Bot-0088cc)
 ![Status](https://img.shields.io/badge/status-active-brightgreen)
-![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-orange)
+
 
 **Интеллектуальная система для оптимального планирования поездок**
 
