@@ -217,9 +217,9 @@ python src/main.py
 
 | Роль | Участник | Контакты |
 |------|----------|----------|
-| **Project woman** | Берлизова Екатерина | (https://github.com/katrina-ranepa) |
-| **Project man** | Кириллов Егор | https://avatars.githubusercontent.com/u/77578877?v=4 |
-| **Project man** | Михайлов Александр | gghh |
+| **Project woman** | Берлизова Екатерина | https://github.com/katrina-ranepa |
+| **Project man** | Кириллов Егор | https://github.com/egor-ranepa|
+| **Project man** | Михайлов Александр | https://github.com/the0submariner/the0submariner| 
 
 
 </div>
