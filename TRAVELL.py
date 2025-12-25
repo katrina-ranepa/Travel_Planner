@@ -2,7 +2,7 @@ import pandas as pd
 from datetime import datetime
 
 # Загрузка данных о погоде
-df = pd.read_csv("weather_daily_all_cities.csv", encoding="utf-8")
+df = pd.read_csv("weather_daily_all_cities.csv")
 
 # Преобразование столбца с датой в datetime
 df["Дата"] = pd.to_datetime(df["Дата"])
@@ -497,7 +497,7 @@ def get_travel_recommendations(city=None, month=None):
     if month:
         filtered_events = filtered_events[filtered_events["Месяц"] == month]
 
-    for _, event in filtered_events.iterrows():
+    for _, event in filtered_events.iterrows(): # позволяет перебирать строки DataFrame в цикле как пары (индекс, строка)
         # Получаем информацию о погоде
         comfort_level, avg_temp, avg_precip = get_weather_comfort_level(
             event["Город"], event["Месяц"]
@@ -570,8 +570,8 @@ def main():
 
         elif choice == "2":
             # События в конкретном городе
-            print("\nДоступные города:", ", ".join(sorted(df["Город"].unique())))
-            city = input("Введите название города: ").strip()
+            print("\nДоступные города:", ", ".join(sorted(df["Город"].unique()))) # sorted() - сортировка по алфавиту  #join(...) - объединение в строку с разделителем
+            city = input("Введите название города: ").strip() 
 
             if city in df["Город"].unique():
                 recommendations = get_travel_recommendations(city=city)
