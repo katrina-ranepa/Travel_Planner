@@ -1,18 +1,22 @@
+from dotenv import load_dotenv
+import os
 import telebot
 import pandas as pd
 from datetime import datetime
 
-# Инициализация бота
-bot = telebot.TeleBot("tOKEN")# надо вставить 
+load_dotenv()
 
-# Загрузка данных (упрощенная версия)
+# Инициализация бота
+bot = telebot.TeleBot(os.getenv("TOKEN"))
+
+# Загрузка данных
 try:
     df = pd.read_csv("weather_daily_all_cities.csv")
     df["Дата"] = pd.to_datetime(df["Дата"])
 except:
     df = pd.DataFrame()
 
-# Упрощенные функции
+# Функции
 def get_weather_info(city, month):
     """Упрощенная функция погоды"""
     if df.empty or city not in df["Город"].unique():
