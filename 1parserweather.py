@@ -1,22 +1,22 @@
-import requests
-from bs4 import BeautifulSoup
-import pandas as pd
-from datetime import datetime, timedelta
-import time
-import sys
-import os
+import requests  # Для HTTP-запросов к сайту
+from bs4 import BeautifulSoup  # Для парсинга HTML
+import pandas as pd  # Для работы с табличными данными
+from datetime import datetime, timedelta  # Для работы с датами
+import time  # Для пауз между запросами
+import sys  # Для управления системными функциями
+import os  # Для работы с файловой системой
 
 
 class DailyWeatherParser:
     def __init__(self):
         """Инициализация парсера погодных данных"""
         self.base_url = "https://pogoda-service.ru/archive_gsod_res.php"
-        self.daily_data = []  # Храним данные по дням
+        self.daily_data = []  # Храним данные по дням # Список для хранения данных
         self.headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-        }
+        }  # Заголовки, чтобы сайт думал, что это браузер(от блокировок/ботов)
 
-    def parse_float_value(self, value_str):
+    def parse_float_value(self, value_str): # Преобразует строку в число, обрабатывает запятые и пустые значения
         """Парсит строку в число, возвращает None если не удается"""
         try:
             if value_str and value_str.strip():
@@ -24,7 +24,7 @@ class DailyWeatherParser:
                 clean_str = value_str.strip().replace(",", ".")
                 return float(clean_str)
         except:
-            pass
+            pass  # "Ничего не делать, просто продолжаем" для обработки ошибок
         return None
 
     def parse_city_daily_data(
@@ -44,12 +44,8 @@ class DailyWeatherParser:
             # Отправляем GET-запрос
             response = requests.get(
                 self.base_url, params=params, headers=self.headers, timeout=30
-            )
-            response.raise_for_status()
-
-            # Проверяем кодировку
-            if response.encoding.lower() not in ["utf-8", "utf8"]:
-                response.encoding = "utf-8"
+            )  # Передача фильтров, параметров поиска Параметры, которые добавляются к URL после знака ?.
+            response.raise_for_status() #проверка статуса успещности 
 
             # Парсим HTML
             soup = BeautifulSoup(response.text, "html.parser")
@@ -63,15 +59,21 @@ class DailyWeatherParser:
             # Получаем все строки таблицы (пропускаем заголовок)
             rows = table.find_all("tr")[1:]  # Пропускаем заголовок
 
-            days_processed = 0
+            days_processed = 0#счетчик кол-ва успешно обработанных дней
 
-            for row in rows:
+            for (
+                row
+            ) in (
+                rows
+            ):  # rows — список строк таблицы (теги <tr>),  полученный через table.find_all("tr")[1:]
                 cols = row.find_all("td")
                 if len(cols) >= 1:  # Проверяем, что есть хотя бы дата
                     try:
                         # Извлекаем дату (первая колонка)
                         date_str = cols[0].text.strip()
-                        date_obj = datetime.strptime(date_str, "%d.%m.%Y")
+                        date_obj = datetime.strptime(
+                            date_str, "%d.%m.%Y"
+                        )  # "%d.%m.%Y" — формат для распознавания день месяц год
 
                         # Извлекаем данные из всех доступных колонок
                         max_temp = (
@@ -173,15 +175,14 @@ class DailyWeatherParser:
         try:
             # Создаем DataFrame
             df = pd.DataFrame(self.daily_data)
-
             # Сортируем по городу, дате
             df = df.sort_values(["Город", "Дата"])
-
             # Заменяем NaN на "None" для читаемости
             df = df.fillna("None")
-
             # Сохраняем в CSV
-            df.to_csv(filename, index=False, encoding="utf-8-sig")
+            df.to_csv(
+                filename, index=False
+            )  # сохраняет только ваши данные, без этой колонки(убирает первую колонку)
 
             # Проверяем, что файл создан
             if os.path.exists(filename):
@@ -273,9 +274,9 @@ def create_sample_daily_file():
 
         # Создаем данные за 10 дней с некоторыми пропусками
         for day in range(1, 11):
-            date = f"2024-06-{day:02d}"
+            date = f"2024-06-{day:02d}"  #:02d — форматирует число как 2-значное с ведущим нулем
 
-            # Создаем реалистичные данные, иногда с пропусками
+            # Создаем реалистичные данные, иногда с пропусками для проверки парсера
             if day == 3 or day == 7:  # Пропускаем данные для 3-го и 7-го дня
                 sample_data.append(
                     {
