@@ -6,9 +6,9 @@ from datetime import datetime
 
 def get_token():
     """Загружает токен только из .env файла"""
-    # Загружаем переменные из .env
+
     load_dotenv()
-    
+
     # Получаем токен
     token = os.getenv("TOKEN")
     
@@ -23,12 +23,11 @@ try:
     print(f"✅ Токен загружен: {TOKEN[:10]}...")
 except ValueError as e:
     print(e)
-    exit(1)
+   
 # Инициализация бота
 try:
     print("✓ Инициализирую бота...")
     bot = telebot.TeleBot(TOKEN)
-    print("✓ Бот инициализирован успешно!")
 except Exception as e:
     print(f"✗ Ошибка при создании бота: {e}")
     print("Возможно, токен невалидный или неправильного формата")

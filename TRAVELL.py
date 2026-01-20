@@ -5,7 +5,7 @@ from datetime import datetime
 df = pd.read_csv("weather_daily_all_cities.csv")
 
 # Преобразование столбца с датой в datetime
-df["Дата"] = pd.to_datetime(df["Дата"])
+df["Дата"] = pd.to_datetime(df["Дата"]) #преобразует строку с датой в формат datetime для работы с датами
 
 # Словарь событий
 events_data = [
@@ -412,8 +412,6 @@ events_data = [
 events_df = pd.DataFrame(events_data)
 
 
-
-
 def get_weather_comfort_level(city, month):
     """
     Определяет уровень комфортности погоды для города в указанный месяц
@@ -430,13 +428,12 @@ def get_weather_comfort_level(city, month):
     avg_precip = city_month_data["Осадки_мм"].mean()
     avg_wind = city_month_data["Скорость_ветра_мс"].mean()
 
-
     # Рассчитываем количество солнечных дней
-    sunny_days = city_month_data[city_month_data["Сред_температура"] > 15].shape[0]
+    sunny_days = city_month_data[city_month_data["Сред_температура"] > 15].shape[0]  # количество строк
     total_days = city_month_data.shape[0]
     sunny_percentage = (sunny_days / total_days * 100) if total_days > 0 else 0
 
-      # Определяем уровень комфортности
+    # Определяем уровень комфортности
     if avg_temp is None:
         return "Недостаточно данных о погоде", None, None, None, None
 
@@ -480,12 +477,22 @@ def get_weather_comfort_level(city, month):
         comfort = "Нормальные условия"
 
     # Учитываем осадки
-    if avg_precip and avg_precip > 5:
+    if avg_precip and avg_precip > 5:  # проверяем, что значение не None/False
         comfort += ", возможны осадки"
     elif avg_precip and avg_precip > 2:
         comfort += ", иногда дожди"
 
-# Учитываем солнце
+
+
+        #avg_precip = 0.5  # → не добавляем ничего (мало осадков)
+        #vg_precip = 3    # → добавляем ", иногда дожди" (2-5 мм)
+       #avg_precip = 8    # → добавляем ", возможны осадки" (>5 мм)
+       #avg_precip = None # → не добавляем (нет данных)
+       
+       #> 2 мм — лёгкий дождь, зонтик не обязателен
+        #> 5 мм — умеренный дождь, нужен зонтик/дождевик
+
+    # Учитываем солнце
     if sunny_percentage > 70:
         comfort += ", много солнца"
     elif sunny_percentage < 30:
@@ -498,10 +505,6 @@ def get_weather_comfort_level(city, month):
         round(avg_wind, 1) if avg_wind else None,
         round(sunny_percentage, 1)
     )
-
-
-
-
 
 
 def analyze_vacation_type(city, month, avg_temp):
@@ -580,7 +583,6 @@ def analyze_vacation_type(city, month, avg_temp):
     return ", ".join(vacation_types) if vacation_types else "🎭 Разноплановый", "; ".join(recommendations)
 
 
-
 def get_travel_recommendations(city=None, month=None):
     """
     Генерирует рекомендации для поездок на основе событий и погодных условий.
@@ -657,13 +659,6 @@ def get_travel_recommendations(city=None, month=None):
         recommendations.append(recommendation)
 
     return pd.DataFrame(recommendations)
-
-
-
-
-
-
-
 
 
 def get_best_months_for_vacation_type(city, vacation_type):
