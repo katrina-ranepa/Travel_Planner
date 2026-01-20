@@ -1,1 +1,9 @@
-venv
+# Папка с Telegram ботом и токеном
+token.venv/
+*.venv/
+venv/
+.venv/
+env/
+
+# Файлы данных
+*.csv
