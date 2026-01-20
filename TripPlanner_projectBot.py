@@ -24,7 +24,6 @@ try:
 except ValueError as e:
     print(e)
     exit(1)
-
 # Инициализация бота
 try:
     print("✓ Инициализирую бота...")
@@ -147,7 +146,6 @@ def send_recommendation(message):
         
         city = parts[1]
         month = int(parts[2])
-        
         if month < 1 or month > 12:
             bot.send_message(message.chat.id, "❌ Месяц должен быть от 1 до 12")
             return
@@ -189,7 +187,6 @@ def send_best_months(message):
         parts = message.text.split()
         if len(parts) < 2:
             bot.send_message(message.chat.id, "❌ Используйте: /best [город]")
-            return
         
         city = parts[1]
         
@@ -203,7 +200,7 @@ def send_best_months(message):
 ⛷️ Горнолыжный: Декабрь, Январь, Февраль
 🏙️ Городской: Апрель-Октябрь
             """
-        else:
+
             # Анализируем реальные данные
             best_months = []
             for month in range(1, 13):
@@ -266,11 +263,5 @@ if __name__ == "__main__":
     print("🤖 Бот запущен...")
     bot.polling(none_stop=True)
 
-
 ## 1. Установите зависимости
 # pip install python-telegram-bot pandas python-dotenv
-
-# 2. Создайте .env файл с токеном
-# echo "TOKEN" > .env
-
-# Ctrl + C - остановить
