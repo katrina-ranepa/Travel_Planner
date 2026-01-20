@@ -7,3 +7,6 @@
 venv/
 .venv/
 env/
+venv
+token.venv/    # игнорирует всю папку
+token.venv/*   # тоже работает
