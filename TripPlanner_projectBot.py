@@ -1,33 +1,61 @@
 from dotenv import load_dotenv
 import os
-import telebot
+import telebot 
 import pandas as pd
 from datetime import datetime
 
-load_dotenv()
+def get_token():
+    """Загружает токен только из .env файла"""
+    # Загружаем переменные из .env
+    load_dotenv()
+    
+    # Получаем токен
+    token = os.getenv("TOKEN")
+    
+    if not token:
+        raise ValueError("❌ Токен не найден в .env файле. Создайте файл .env с содержимым: TOKEN=ваш_токен")
+    
+    return token.strip()
 
-# Инициализация бота
-bot = telebot.TeleBot(os.getenv("TOKEN"))
+# Использование
+try:
+    TOKEN = get_token()
+    print(f"✅ Токен загружен: {TOKEN[:10]}...")
+except ValueError as e:
+    print(e)
+    exit(1)
+
 
 # Загрузка данных
 try:
-    df = pd.read_csv("weather_daily_all_cities.csv")
+    df = pd.read_csv("weather_daily_all_cities.csv")#загрузка данныхх
     df["Дата"] = pd.to_datetime(df["Дата"])
 except:
     df = pd.DataFrame()
 
 # Функции
 def get_weather_info(city, month):
-    """Упрощенная функция погоды"""
-    if df.empty or city not in df["Город"].unique():
-        return "Нет данных", None
+    cities_data = {
+        "санкт-петербург": [-6, -5, -1, 5, 12, 16, 18, 17, 12, 6, 1, -3],
+        "сочи":           [6, 6, 8, 12, 17, 21, 24, 24, 21, 16, 12, 8],  
+        "владивосток":    [-12, -10, -3, 5, 11, 15, 20, 21, 17, 10, 0, -9],
+        "калининград":    [-1, -1, 2, 7, 13, 17, 19, 19, 14, 9, 4, 0],
+        "махачкала":      [2, 2, 5, 11, 17, 22, 25, 25, 20, 14, 8, 4]
+    }
+        # Приводим город к нижнему регистру
+    city_lower = city.lower().strip()
     
-    city_data = df[(df["Город"] == city) & (df["Месяц"] == month)]
-    if city_data.empty:
-        return "Нет данных", None
+    # Проверяем разные варианты написания
+    if city_lower == "cочи":  # если английская C
+        city_lower = "сочи"
     
-    avg_temp = city_data["Сред_температура"].mean()
-    return f"Средняя температура: {round(avg_temp, 1)}°C", avg_temp
+    if city_lower in cities_data:
+        if 1 <= month <= 12:
+            temp = cities_data[city_lower][month-1]
+            return f"Средняя температура: {temp}°C", temp
+    
+    return "Нет данных", None
+
 
 def get_vacation_type(temp, month):
     """Определение типа отдыха"""
@@ -228,3 +256,12 @@ def handle_all_messages(message):
 if __name__ == "__main__":
     print("🤖 Бот запущен...")
     bot.polling(none_stop=True)
+
+
+## 1. Установите зависимости
+# pip install python-telegram-bot pandas python-dotenv
+
+# 2. Создайте .env файл с токеном
+# echo "TOKEN" > .env
+
+# Ctrl + C - остановить
