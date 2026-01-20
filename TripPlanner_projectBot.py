@@ -25,6 +25,15 @@ except ValueError as e:
     print(e)
     exit(1)
 
+# Инициализация бота
+try:
+    print("✓ Инициализирую бота...")
+    bot = telebot.TeleBot(TOKEN)
+    print("✓ Бот инициализирован успешно!")
+except Exception as e:
+    print(f"✗ Ошибка при создании бота: {e}")
+    print("Возможно, токен невалидный или неправильного формата")
+    exit(1)
 
 # Загрузка данных
 try:
