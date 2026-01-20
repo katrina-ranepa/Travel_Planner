@@ -10,3 +10,15 @@ env/
 venv
 token.venv/    # игнорирует всю папку
 token.venv/*   # тоже работает
+
+
+
+# Файлы, которые уже есть и нужно скрыть
+token.venv/
+*.env
+.env
+config.py
+*.csv
+*.log
+*.db
+EOF
